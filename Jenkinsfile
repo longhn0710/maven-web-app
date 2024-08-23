@@ -34,13 +34,22 @@ pipeline {
             steps {
                 // docker push localhub.vn:5000/jdk17-maven3-9-1-docker-awscli:latest
                sh """
-               docker build localhub.vn:5000/webapp .
+               docker build -t localhub.vn:5000/webapp .
                docker push localhub.vn:5000/webapp
-               docker run -d -p 8888:8080 --name my-running-app localhub.vn:5000/webapp
                """
             }
         }
-        
+        stage('Run Docker image on slave1') {
+            agent {
+                label 'slave1'
+            }
+            steps {
+                sh """
+                docker pull localhub.vn:5000/webapp
+                docker run -d --name webapp -p 8080:8080 localhub.vn:5000/webapp
+                """
+            }
+        }
     }
     post {
         always {

@@ -18,10 +18,20 @@ pipeline {
             steps{
                steps {
                 	script {
-                		sh 'ansible-playbook task.yml'
+                		//sh 'ansible-playbook task.yml'
+                        echo "look good"
                 	}
                 }
             }
+        }
+    }
+    post {
+        always {
+            // Archive the .war file as an artifact, regardless of the build outcome
+            archiveArtifacts artifacts: 'target/maven-web-app.war', allowEmptyArchive: true
+            
+            // Optionally, you can add additional steps here, like sending notifications or cleaning up.
+            echo 'Build completed. Attempting to archive the .war file.'
         }
     }
 }

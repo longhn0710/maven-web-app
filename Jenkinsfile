@@ -32,10 +32,10 @@ pipeline {
         }
         stage('Build Docker images') {
             steps {
+                // docker push localhub.vn:5000/jdk17-maven3-9-1-docker-awscli:latest
                sh """
-               docker build webapp .
-               
-               
+               docker build localhub.vn:5000/webapp .
+               docker push localhub.vn:5000/webapp
                """
             }
         }

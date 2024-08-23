@@ -19,7 +19,7 @@ pipeline {
                steps {
                 	script {
                 		//sh 'ansible-playbook task.yml'
-                        echo "look good"
+                        sh' echo "look good"'
                 	}
                 }
             }

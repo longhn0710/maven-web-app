@@ -36,6 +36,7 @@ pipeline {
                sh """
                docker build localhub.vn:5000/webapp .
                docker push localhub.vn:5000/webapp
+               docker run -d -p 8888:8080 --name my-running-app localhub.vn:5000/webapp
                """
             }
         }

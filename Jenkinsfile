@@ -36,18 +36,8 @@ pipeline {
                sh """
                docker build -t localhub.vn:5000/webapp .
                docker push localhub.vn:5000/webapp
+               docker run -d --name webapp -p 8080:8080 localhub.vn:5000/webapp
                """
-            }
-        }
-        stage('Run Docker image on slave1') {
-            agent {
-                label 'slave1'
-            }
-            steps {
-                sh """
-                docker pull localhub.vn:5000/webapp
-                docker run -d --name webapp -p 8080:8080 localhub.vn:5000/webapp
-                """
             }
         }
     }
@@ -57,7 +47,7 @@ pipeline {
             archiveArtifacts artifacts: 'target/maven-web-app.war', allowEmptyArchive: true
             
             // Optionally, you can add additional steps here, like sending notifications or cleaning up.
-            echo 'Build completed. Attempting to archive the .war file.'
+            //echo 'Build completed. Attempting to archive the .war file.'
         }
     }
 }
